@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Django aur my mind
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>Welcome to the world of stock tweets</h1>
+
+    <!-- Button below navbar, properly aligned -->
+    <div class="d-flex justify-content-end ">
+        <a class="btn btn-lg btn-primary fw-bold shadow-lg px-4 py-2 animate-btn" href="{% url 'tweet_create' %}">
+            🚀 Create a Tweet
+        </a>
+    </div>
+
+    <div class="row gap-3 justify-content-center mt-3">
+        {% for t in tweets %}
+            <div class="card shadow-lg" style="width: 18rem;">
+                <img src="{{ t.photo.url }}" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">{{ t.user.username }}</h5>
+                    <p class="card-text">{{ t.text }}</p>
+                   {%if t.user == user%}
+                    <a class="btn btn-warning" href="{% url 'tweet_edit' t.id %}">✏️ Edit</a>
+                    <a class="btn btn-danger" href="{% url 'tweet_delete' t.id %}">🗑️ Delete</a>
+                   {%endif%}
+                
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Button Animation & Styling -->
+<style>
+    .animate-btn {
+        transition: all 0.3s ease-in-out;
+        border-radius: 50px;
+    }
+
+    .animate-btn:hover {
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        transform: scale(1.1);
+        box-shadow: 0px 10px 30px rgba(255, 65, 108, 0.5);
+    }
+</style>
+{% endblock %}
